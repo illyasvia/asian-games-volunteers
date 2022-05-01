@@ -1,0 +1,13 @@
+/target/classes/com/example/demo/common/Result.class
+/target/classes/com/example/demo/config/MyConfiguration.class
+/target/classes/com/example/demo/controller/MyController.class
+/target/classes/com/example/demo/Pojo/User.class
+/target/classes/com/example/demo/DemoApplication.class
+/target/classes/com/example/demo/ServletInitializer.class
+/target/classes/META-INF/spring-configuration-metadata.json
+/target/classes/application.properties
+/target/classes/application.yaml
+/target/test-classes/com/example/demo/DemoApplicationTests.class
+/demo.iml
+/mvnw
+/mvnw.cmd
