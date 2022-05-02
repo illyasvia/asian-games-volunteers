@@ -1,4 +1,4 @@
-# ?????
+# 用户名错误
 WRONG_USERNAME = 1001
-# ????
+# 密码错误
 WRONG_PASSWORD = 1002
