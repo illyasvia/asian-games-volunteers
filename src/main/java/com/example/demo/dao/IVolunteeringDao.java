@@ -24,5 +24,5 @@ public interface IVolunteeringDao {
      */
     void updateVolById(Integer vid);
 
-    void deleteVol();
+    void deleteVol(Integer vid);
 }

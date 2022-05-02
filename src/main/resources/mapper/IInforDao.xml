@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.IInforDao">
+    <resultMap id="userVolMap" type="user">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="sex" column="sex"/>
+        <result property="exp" column="exp"/>
+        <result property="register" column="register"/>
+        <result property="idCard" column="idCard"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="profile" column="profile"/>
+        <collection property="registrationList" ofType="Volunteering">
+            <id property="vid" column="vid"></id>
+            <result property="title" column="title"></result>
+            <result property="exp" column="exp"></result>
+            <result property="like" column="like"></result>
+            <result property="cover" column="cover"></result>
+            <result property="pNum" column="pNum"></result>
+            <result property="type" column="type"></result>
+            <result property="status" column="status"></result>
+            <result property="content" column="cotent"></result>
+            <result property="location" column="location"></result>
+            <result property="start" column="stary"></result>
+            <result property="end" column="end"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="volUserMap" type="volunteering">
+        <id property="vid" column="vid"></id>
+        <result property="title" column="title"></result>
+        <result property="exp" column="exp"></result>
+        <result property="like" column="like"></result>
+        <result property="cover" column="cover"></result>
+        <result property="pNum" column="pNum"></result>
+        <result property="type" column="type"></result>
+        <result property="status" column="status"></result>
+        <result property="content" column="cotent"></result>
+        <result property="location" column="location"></result>
+        <result property="start" column="stary"></result>
+        <result property="end" column="end"></result>
+        <collection property="userList" ofType="user">
+            <id property="uid" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="sex" column="sex"/>
+            <result property="exp" column="exp"/>
+            <result property="register" column="register"/>
+            <result property="idCard" column="idCard"/>
+            <result property="phone" column="phone"/>
+            <result property="email" column="email"/>
+            <result property="profile" column="profile"/>
+        </collection>
+    </resultMap>
+    <select id="getAll" resultMap="userVolMap">
+        select user.*,volunteering.* from user,volunteering,info where user.uid = info.uid and volunteering.vid = info.vid
+    </select>
+    <select id="getByPage" parameterType="condition" resultMap="userVolMap">
+
+    </select>
+    <select id="getInforByUid" parameterType="integer" resultMap="userVolMap">
+        select user.*,volunteering.*
+        from user,volunteering,info where user.uid = info.uid and volunteering.vid = info.vid and user.uid = #{uid}
+    </select>
+    <select id="getInforByVid" parameterType="integer" resultMap="volUserMap">
+        select user.*,volunteering.*
+         from user,volunteering,info where user.uid = info.uid and volunteering.vid = info.vid and volunteering.vid = #{vid}
+    </select>
+    <delete id="deleteSpecifiedInfor" parameterType="integer">
+        delete from info where uid = #{uid} and vid = #{vid}
+    </delete>
+    <delete id="deleteInforByVid" parameterType="integer">
+        delete from info where vid = #{vid}
+    </delete>
+    <delete id="addInfor" parameterType="Integer">
+        insert into info values(#{uid},#{vid})
+    </delete>
+</mapper>

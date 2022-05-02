@@ -26,8 +26,8 @@
         <if test="exp != null">
             ,exp = #{exp}
         </if>
-        <if test="coverv != null">
-            ,coverv = #{coverv}
+        <if test="cover != null">
+            ,cover = #{cover}
         </if>
         <if test="pNum != null">
             ,pNum = #{pNum}
@@ -53,7 +53,7 @@
          where vid = #{vid}
     </update>
     <insert id="addVol" parameterType="volunteering">
-        insert into volunteering values(NULL,#{title},#{exp},#{like},#{coverv},#{pNum},#{type},#{status},#{content},#{location},#{start},#{end})
+        insert into volunteering values(NULL,#{title},#{exp},#{like},#{cover},#{pNum},#{type},#{status},#{content},#{location},#{start},#{end})
         <selectKey keyProperty="vid" keyColumn="vid" resultType="integer">
             select last_insert_id()
         </selectKey>
