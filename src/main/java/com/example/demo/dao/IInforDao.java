@@ -12,6 +12,7 @@ import java.util.List;
  * ps:我不知道叫啥好
  */
 public interface IInforDao {
+    
     /**
      * @return 返回的 User 中带有报名的活动
      */
