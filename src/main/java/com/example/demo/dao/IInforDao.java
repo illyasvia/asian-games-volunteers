@@ -1,7 +1,8 @@
 package com.example.demo.dao;
 
-import com.example.demo.Pojo.User;
-import com.example.demo.Pojo.Volunteering;
+import com.example.demo.pojo.User;
+import com.example.demo.pojo.Volunteering;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,12 +12,22 @@ import java.util.List;
  * 该类没有修改类，你报错了你退了活动重报就行，没有改的理由
  * ps:我不知道叫啥好
  */
+@Mapper
 public interface IInforDao {
     
     /**
      * @return 返回的 User 中带有报名的活动
      */
     List<User> getAll();
+
+    /**
+     * 按页查询
+     * @param start 开始下标
+     * @param rows  查询条数
+     * @param user  可设置条件
+     * @param volunteering  可设置条件
+     */
+    List<User> getByPage(Integer start, Integer rows, User user, Volunteering volunteering);
 
     /**
      * 根据用户id获取用户及报名的活动
