@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * 用户信息dao
- * 查询返回：用户的名字、密码、性别代码、电话
  */
 public interface IUserDao {
     List<User> getAll();

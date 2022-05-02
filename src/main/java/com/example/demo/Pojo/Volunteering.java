@@ -14,9 +14,17 @@ import java.util.List;
 @ToString
 public class Volunteering {
     private Integer vid;
-    private String volName;
-    private Date startTime;
-    private Date endTime;
+    private String title;
+    private Integer exp;
+    private Integer like;
+    private String coverv;
+    private Integer pNum;
+    private Integer type;
+    private Integer status;
+    private String content;
+    private Integer location;
+    private Date start;
+    private Date end;
     // 报名该活动的用户
     private List<User> userList;
 }

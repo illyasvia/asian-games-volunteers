@@ -19,6 +19,15 @@ public interface IInforDao {
     List<User> getAll();
 
     /**
+     * 按页查询
+     * @param start 开始下标
+     * @param rows  查询条数
+     * @param user  可设置条件
+     * @param volunteering  可设置条件
+     */
+    List<User> getByPage(Integer start, Integer rows, User user, Volunteering volunteering);
+
+    /**
      * 根据用户id获取用户及报名的活动
      * @param uid 用户id
      * @return 返回用户 与 报名的活动

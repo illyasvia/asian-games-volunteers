@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,8 +19,13 @@ public class User implements Serializable {
     private Integer uid;
     private String username;
     private String password;
-    private int sex;
-    private String telephone;
+    private Integer sex;
+    private Integer exp;
+    private Date register;
+    private String idCard;
+    private String phone;
+    private String email;
+    private String profile;
     // 用户报名的活动
     private List<Volunteering> registrationList;
 }
