@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,6 @@ public class User implements Serializable {
     private String password;
     private int sex;
     private String telephone;
+    // 用户报名的活动
+    private List<Volunteering> registrationList;
 }
