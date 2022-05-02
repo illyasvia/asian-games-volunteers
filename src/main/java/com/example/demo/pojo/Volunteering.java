@@ -26,7 +26,7 @@ public class Volunteering {
     private String title;
     private Integer exp;
     private Integer like; // 点赞数
-    private String coverv;// 封面
+    private String cover;// 封面
     private Integer pNum;// 限制人数
     private Integer type;
     private Integer status;
