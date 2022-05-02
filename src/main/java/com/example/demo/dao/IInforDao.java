@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.pojo.Condition;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.Volunteering;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,12 +23,9 @@ public interface IInforDao {
 
     /**
      * 按页查询
-     * @param start 开始下标
-     * @param rows  查询条数
-     * @param user  可设置条件
-     * @param volunteering  可设置条件
+     * @param condition 设置下标，每页页数 与 各种条件
      */
-    List<User> getByPage(Integer start, Integer rows, User user, Volunteering volunteering);
+    List<User> getByPage(Condition condition);
 
     /**
      * 根据用户id获取用户及报名的活动

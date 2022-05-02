@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IUserDao;
 import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.User;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class MyController {
     @Autowired
-    private IVolunteeringDao iVolunteeringDao;
+    private IInforDao iInforDao;
 
     @PostMapping
     public Result<User> post(User user){
@@ -22,12 +23,7 @@ public class MyController {
         return Result.success(user);
     }
     @GetMapping
-    public Volunteering get(){
-        Volunteering v = new Volunteering();
-        v.setPNum(100);
-        v.setTitle("ee");
-        v.setExp(10);
-        iVolunteeringDao.addVol(v);
-        return v;
+    public List<User> get(){
+        return iInforDao.getInforByUid(78);
     }
 }
