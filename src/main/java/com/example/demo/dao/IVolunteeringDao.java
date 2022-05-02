@@ -1,13 +1,15 @@
 package com.example.demo.dao;
 
-import com.example.demo.Pojo.Volunteering;
+import com.example.demo.pojo.Volunteering;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 志愿活动dao
  */
-public interface IVolunteering {
+@Mapper
+public interface IVolunteeringDao {
     List<Volunteering> getAll();
 
     List<Volunteering> getVolById(Integer vid);

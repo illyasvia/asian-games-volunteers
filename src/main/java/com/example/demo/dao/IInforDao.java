@@ -1,7 +1,8 @@
 package com.example.demo.dao;
 
-import com.example.demo.Pojo.User;
-import com.example.demo.Pojo.Volunteering;
+import com.example.demo.pojo.User;
+import com.example.demo.pojo.Volunteering;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * 该类没有修改类，你报错了你退了活动重报就行，没有改的理由
  * ps:我不知道叫啥好
  */
+@Mapper
 public interface IInforDao {
     
     /**

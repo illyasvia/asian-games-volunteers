@@ -1,22 +1,26 @@
 package com.example.demo.controller;
 
-import com.example.demo.Pojo.User;
+import com.example.demo.dao.IUserDao;
+import com.example.demo.pojo.User;
 import com.example.demo.common.Result;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class MyController {
+    @Autowired
+    private IUserDao iUserDao;
+
     @PostMapping
     public Result<User> post(User user){
         System.out.println(user);
         return Result.success(user);
     }
     @GetMapping
-    public String get(){
-        return "xixi";
+    public List<User> get(){
+        return iUserDao.getAll();
     }
 }

@@ -1,12 +1,14 @@
 package com.example.demo.dao;
 
-import com.example.demo.Pojo.User;
+import com.example.demo.pojo.User;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 用户信息dao
  */
+@Mapper
 public interface IUserDao {
     List<User> getAll();
 

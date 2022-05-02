@@ -1,4 +1,4 @@
-package com.example.demo.Pojo;
+package com.example.demo.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +13,21 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class Volunteering {
+    // 正在招募
+    private static final int ACTIVE = 1;
+    // 即将进行
+    private static final int WAIT = 2;
+    // 活动截止
+    private static final int CLOSED = 3;
+    // 活动结束
+    private static final int END = 4;
+
     private Integer vid;
     private String title;
     private Integer exp;
-    private Integer like;
-    private String coverv;
-    private Integer pNum;
+    private Integer like; // 点赞数
+    private String coverv;// 封面
+    private Integer pNum;// 限制人数
     private Integer type;
     private Integer status;
     private String content;
