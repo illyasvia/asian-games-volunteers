@@ -12,6 +12,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 public class User implements Serializable {
+    private static final int MALE = 1;
+    private static final int FEMALE = 0;
     private String username;
     private String password;
+    private int sex;
+    private String telephone;
 }
