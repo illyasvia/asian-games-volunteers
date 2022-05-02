@@ -2,10 +2,10 @@ mybatis:
   type-aliases-package: com.example.demo.pojo
   mapper-locations: classpath:mapper/*Dao.xml
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/volunteer?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
   jackson:
-    date-format: yyyy-MM-dd
-      datasource:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost/volunteer?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-          username: root
-          password: root
+    date-format: yyyy年MM月dd日

@@ -20,7 +20,14 @@ public class MyController {
         return Result.success(user);
     }
     @GetMapping
-    public List<User> get(){
-        return iUserDao.getAll();
+    public User get(){
+        User user = new User();
+        user.setUid(1005);
+        user.setUsername("傻逼");
+        user.setEmail("123@qq.com");
+        System.out.println(user);
+        iUserDao.updateUserById(user);
+        System.out.println(user);
+        return user;
     }
 }

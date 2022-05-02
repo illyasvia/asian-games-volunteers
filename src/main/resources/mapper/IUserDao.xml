@@ -6,4 +6,47 @@
     <select id="getAll" resultType="user">
         select * from user
     </select>
+    <select id="getUserById" resultType="user" parameterType="integer">
+        select * from user where uid = #{uid}
+    </select>
+    <delete id="deleteUserById" parameterType="integer">
+        delete from user where uid = #{uid}
+    </delete>
+    <update id="updateUserById">
+        update user set uid = #{uid}
+        <if test="username != null">
+             ,username = #{username}
+        </if>
+        <if test="password != null">
+             ,password = #{password}
+        </if>
+        <if test="sex != null">
+            ,sex = #{sex}
+        </if>
+        <if test="exp != null">
+            ,exp = #{exp}
+        </if>
+        <if test="register != null">
+            ,register = #{register}
+        </if>
+        <if test="idCard != null">
+            ,idCard = #{idCard}
+        </if>
+        <if test="phone != null">
+            ,phone = #{phone}
+        </if>
+        <if test="email != null">
+            ,email = #{email}
+        </if>
+        <if test="profile != null">
+            ,profile = #{profile}
+        </if>
+         where uid = #{uid}
+    </update>
+    <insert id="addUser" parameterType="user">
+        insert into user values(NULL,#{username},#{password},#{sex},#{exp},#{register},#{idCard},#{phone},#{email},#{profile})
+        <selectKey keyProperty="uid" keyColumn="uid" resultType="integer">
+            select last_insert_id()
+        </selectKey>
+    </insert>
 </mapper>

@@ -17,15 +17,15 @@ public class User implements Serializable {
     private static final int MALE = 1;
     private static final int FEMALE = 0;
     private Integer uid;
-    private String username;
-    private String password;
+    private String  username;
+    private String  password;
     private Integer sex;
     private Integer exp;
-    private Date register;
-    private String idCard;
-    private String phone;
-    private String email;
-    private String profile;
+    private Date    register;
+    private String  idCard;
+    private String  phone;
+    private String  email;
+    private String  profile;
     // 用户报名的活动
     private List<Volunteering> registrationList;
 }
