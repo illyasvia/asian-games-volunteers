@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dao.IUserDao;
+import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.User;
 import com.example.demo.common.Result;
+import com.example.demo.pojo.Volunteering;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class MyController {
     @Autowired
-    private IUserDao iUserDao;
+    private IVolunteeringDao iVolunteeringDao;
 
     @PostMapping
     public Result<User> post(User user){
@@ -20,14 +22,12 @@ public class MyController {
         return Result.success(user);
     }
     @GetMapping
-    public User get(){
-        User user = new User();
-        user.setUid(1005);
-        user.setUsername("傻逼");
-        user.setEmail("123@qq.com");
-        System.out.println(user);
-        iUserDao.updateUserById(user);
-        System.out.println(user);
-        return user;
+    public Volunteering get(){
+        Volunteering v = new Volunteering();
+        v.setPNum(100);
+        v.setTitle("ee");
+        v.setExp(10);
+        iVolunteeringDao.addVol(v);
+        return v;
     }
 }
