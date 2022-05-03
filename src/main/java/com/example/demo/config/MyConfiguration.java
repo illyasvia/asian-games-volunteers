@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.Mapping;
 @Configuration()
 @EnableConfigurationProperties()
 public class MyConfiguration {
+
 }

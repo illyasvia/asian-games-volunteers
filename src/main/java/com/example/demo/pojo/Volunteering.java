@@ -1,5 +1,6 @@
 package com.example.demo.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Volunteering implements Serializable {
     private Integer exp;
     private Integer like; // 点赞数
     private String cover;// 封面
+    @JsonProperty("pNum")
     private Integer pNum;// 限制人数
     private Integer type;
     private Integer status;

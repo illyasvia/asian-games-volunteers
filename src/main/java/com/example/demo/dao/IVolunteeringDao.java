@@ -17,12 +17,12 @@ public interface IVolunteeringDao {
     /**
      * 添加志愿者活动
      */
-    void addVol(Volunteering v);
+    void addVol(Volunteering volunteering);
 
     /**
      * 根据志愿者活动id修改信息
      */
-    void updateVolById(Integer vid);
+    void updateVolById(Volunteering volunteering);
 
     void deleteVol(Integer vid);
 }

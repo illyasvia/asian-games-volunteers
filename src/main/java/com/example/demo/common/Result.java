@@ -13,6 +13,7 @@ import lombok.ToString;
 public class Result<T>{
     public static final int WRONG_USERNAME = 1001;
     public static final int WRONG_PASSWORD = 1002;
+    public static final int UNKNOWN_ERROR = 500;
 
     private int code;  // 返回码。0：success；1：false
     private String msg;// 信息
@@ -36,8 +37,8 @@ public class Result<T>{
         return result;
     }
 
-    public static Result<Object> error(int code, String msg){
-        Result<Object> result = new Result<>();
+    public static Result error(int code, String msg){
+        Result result = new Result<>();
         result.setCode(code);
         result.setMsg(msg);
         return result;
