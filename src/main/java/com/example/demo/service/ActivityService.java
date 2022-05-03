@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.Volunteering;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +29,26 @@ public class ActivityService {
         return ans;
     }
 
-    public int addActivity(Volunteering v)
-    {
-        try{
+    public int addActivity(Volunteering v) {
+        try {
             dao.addVol(v);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
             return FAIL;
         }
-        return  SUCCESS;
+        return SUCCESS;
+    }
+
+    public Volunteering getOneActivity(int id) {
+        Volunteering v = null;
+        try {
+            v = dao.getVolById(id).get(0);
+        } catch (Exception e) {
+            System.out.println(e.fillInStackTrace());
+            return v;
+        }
+        return v;
+
     }
 
 }

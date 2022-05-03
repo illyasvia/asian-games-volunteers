@@ -27,4 +27,10 @@ public class ActivityController {
     {
         return asi.addActivity(v);
     }
+
+    @RequestMapping("/queryone")
+    public Volunteering queryone(@RequestBody Volunteering v)
+    {
+        return asi.getOneActivity(v.getVid());
+    }
 }

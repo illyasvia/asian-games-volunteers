@@ -24,8 +24,16 @@ public class UserInfoService {
      * 通过用户ID获取用户对应信息
      **/
     public User getUserinfo(int id) {
-        List<User> user = iud.getUserById(id);
-        return user.get(0);
+        User u=null;
+        try{
+            List<User> user = iud.getUserById(id);
+            u=user.get(0);
+        }catch (Exception e)
+        {
+            System.out.println(e.fillInStackTrace());
+            return u;
+        }
+        return u;
     }
 
     /**

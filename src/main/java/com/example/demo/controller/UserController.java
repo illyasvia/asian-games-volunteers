@@ -16,13 +16,13 @@ public class UserController {
     @Autowired
     UserInfoService uis;
 
-    @GetMapping("/query/{uid}")
-    public User query(@PathVariable int uid) {
-        return uis.getUserinfo(uid);
+    @PostMapping("/query")
+    public User query(@RequestBody User user) {
+        return uis.getUserinfo(user.getUid());
     }
 
     @PostMapping("/add")
-    public int query(@RequestBody User user) {
+    public int add(@RequestBody User user) {
         return uis.register(user);
     }
 
