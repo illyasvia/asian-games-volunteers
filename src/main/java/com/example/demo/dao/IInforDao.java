@@ -22,12 +22,6 @@ public interface IInforDao {
     List<User> getAll();
 
     /**
-     * 按页查询
-     * @param condition 设置下标，每页页数 与 各种条件
-     */
-    List<User> getByPage(Condition condition);
-
-    /**
      * 根据用户id获取用户及报名的活动
      * @param uid 用户id
      * @return 返回用户 与 报名的活动

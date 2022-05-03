@@ -6,6 +6,8 @@ import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.User;
 import com.example.demo.common.Result;
 import com.example.demo.pojo.Volunteering;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,10 @@ import java.util.List;
 public class MyController {
     @Autowired
     private IInforDao iInforDao;
+    @Autowired
+    private IVolunteeringDao iVolunteeringDao;
+    @Autowired
+    private IUserDao iUserDao;
 
     @PostMapping
     public Result<User> post(User user){
@@ -24,6 +30,6 @@ public class MyController {
     }
     @GetMapping
     public List<User> get(){
-        return iInforDao.getInforByUid(78);
+        return iUserDao.getAll();
     }
 }

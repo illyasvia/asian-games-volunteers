@@ -9,3 +9,8 @@ spring:
     password: root
   jackson:
     date-format: yyyy年MM月dd日
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
