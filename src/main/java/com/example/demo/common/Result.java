@@ -13,6 +13,8 @@ import lombok.ToString;
 public class Result<T>{
     public static final int WRONG_USERNAME = 1001;
     public static final int WRONG_PASSWORD = 1002;
+    public static final int FULL_REGISTRATION = 1003;
+    public static final int INFORMATION_ERROR = 1005;
     public static final int UNKNOWN_ERROR = 500;
 
     private int code;  // 返回码。0：success；1：false

@@ -35,6 +35,11 @@ public class ActivitiesController {
         return iActivityService.addVol(v);
     }
 
+    @PostMapping("/add")
+    public Result<?> add(@RequestBody Volunteering v){
+        return iActivityService.addVol(v);
+    }
+
     @PutMapping
     public Result<?> update(@RequestParam Map<String,Object> map){
         Volunteering v = (Volunteering) JSON.parseObject(JSON.toJSONString(map),Volunteering.class);

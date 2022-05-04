@@ -6,6 +6,7 @@ import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IActivityService;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 活动服务service
  * 负责管理活动、添加、删除、发布活动
  */
+@Slf4j
 @Service
 public class ActivityService implements IActivityService {
     @Autowired
@@ -68,9 +70,15 @@ public class ActivityService implements IActivityService {
     @Transactional
     @Override
     public Result<?> deleteVol(Integer vid) {
-        // 需要先删除报名该活动的人的信息
-        iInforDao.deleteInforByVid(vid);
-        iVolunteeringDao.deleteVol(vid);
-        return Result.success();
+        Result<?> result;
+        try{
+            // 需要先删除报名该活动的人的信息
+            iInforDao.deleteInforByVid(vid);
+            iVolunteeringDao.deleteVol(vid);
+            result = Result.success();
+        } catch (Exception e){
+            result = Result.error(Result.UNKNOWN_ERROR,e.getMessage());
+        }
+        return result;
     }
 }

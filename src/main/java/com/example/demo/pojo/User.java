@@ -14,8 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class User implements Serializable {
+    /*Sex*/
     private static final int MALE = 1;
     private static final int FEMALE = 0;
+
     private Integer uid;
     private String  username;
     private String  password;
