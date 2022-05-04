@@ -8,6 +8,7 @@ import com.example.demo.service.IActivityService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 活动服务service
@@ -50,18 +51,21 @@ public class ActivityService implements IActivityService {
         return Result.success(iVolunteeringDao.getVolById(vid));
     }
 
+    @Transactional
     @Override
     public Result<?> addVol(Volunteering v) {
         iVolunteeringDao.addVol(v);
         return Result.success();
     }
 
+    @Transactional
     @Override
     public Result<?> updateVolById(Volunteering v) {
         iVolunteeringDao.updateVolById(v);
         return Result.success();
     }
 
+    @Transactional
     @Override
     public Result<?> deleteVol(Integer vid) {
         // 需要先删除报名该活动的人的信息
