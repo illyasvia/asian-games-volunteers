@@ -27,9 +27,10 @@ public class InfoController {
         return iManagementService.getInforByVid(vid);
     }
 
+    // 接收报名请求
     @PostMapping()
-    public Result<?> save(@RequestParam Integer uid, @RequestParam Integer vid){
-        return iManagementService.addInfor(uid,vid);
+    public Result<?> registration(@RequestParam Integer uid, @RequestParam Integer vid){
+        return iManagementService.registration(uid,vid);
     }
 
     /**

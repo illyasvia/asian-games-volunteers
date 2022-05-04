@@ -58,8 +58,8 @@
     <select id="getAll" resultMap="userVolMap">
         select user.*,volunteering.* from user,volunteering,info where user.uid = info.uid and volunteering.vid = info.vid
     </select>
-    <select id="getByPage" parameterType="condition" resultMap="userVolMap">
-
+    <select id="getCountByVid" parameterType="integer" resultType="integer">
+        select COUNT(vid) from info where vid = #{vid}
     </select>
     <select id="getInforByUid" parameterType="integer" resultMap="userVolMap">
         select user.*,volunteering.*

@@ -14,3 +14,8 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+logging:
+  file:
+    name: volunteer.log
+  

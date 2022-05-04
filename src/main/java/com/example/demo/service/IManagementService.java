@@ -9,5 +9,5 @@ public interface IManagementService {
     Result<?> getInforByVid(Integer vid);
     Result<?> deleteSpecifiedInfor(Integer uid, Integer vid);
     Result<?> deleteInforByVid(Integer vid);
-    Result<?> addInfor(Integer uid, Integer vid);
+    Result<?> registration(Integer uid, Integer vid);
 }

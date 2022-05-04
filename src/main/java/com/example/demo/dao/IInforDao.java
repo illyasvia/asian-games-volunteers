@@ -36,6 +36,11 @@ public interface IInforDao {
     List<Volunteering> getInforByVid(Integer vid);
 
     /**
+     * 获取报名的人数
+     */
+    Integer getCountByVid(Integer vid);
+
+    /**
      * 根据 用户名删除 志愿者活动
      * 就是取消一个用户的某项报名
      */
