@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+<<<<<<< HEAD
 import com.alibaba.fastjson.JSON;
 import com.example.demo.common.Result;
 import com.example.demo.pojo.User;
@@ -53,3 +54,44 @@ public class UserController {
         return iUserService.login(uid,password);
     }
 }
+=======
+import com.example.demo.pojo.User;
+import com.example.demo.service.ActivityService;
+import com.example.demo.service.UserInfoService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/test")
+public class UserController {
+    @Autowired
+    UserInfoService uis;
+
+    @PostMapping("/query")
+    public User query(@RequestBody User user) {
+        return uis.getUserinfo(user.getUid());
+    }
+
+    @PostMapping("/add")
+    public int add(@RequestBody User user) {
+        return uis.register(user);
+    }
+
+    @PostMapping("/update")
+    public int update(@RequestBody User user) {
+        return uis.updateUserinfo(user);
+    }
+
+    @PostMapping("/login")
+    public int login(@RequestBody User user) {
+        return uis.log(user.getUid(), user.getPassword());
+    }
+
+
+}
+
+>>>>>>> d4753b622a4473045e1ced57c58ac6db2c5d8e10
