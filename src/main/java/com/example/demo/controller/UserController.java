@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-<<<<<<< HEAD
+
 import com.alibaba.fastjson.JSON;
 import com.example.demo.common.Result;
 import com.example.demo.pojo.User;
@@ -17,81 +17,40 @@ public class UserController {
     private IUserService iUserService;
 
     @GetMapping
-    public Result<?> get(@RequestParam(value="currentPage",defaultValue="0") Integer currentPage
-            , @RequestParam(value="rows",defaultValue="0") Integer rows){
-        return iUserService.getUser(currentPage,rows);
+    public Result<?> get(@RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage
+            , @RequestParam(value = "rows", defaultValue = "0") Integer rows) {
+        return iUserService.getUser(currentPage, rows);
     }
+
     @GetMapping("/{uid}")
-    public Result<?> get(@PathVariable(name="uid") Integer uid){
+    public Result<?> get(@PathVariable(name = "uid") Integer uid) {
         return iUserService.getById(uid);
     }
 
     @PostMapping
-    public Result<?> save(@RequestParam Map<String,Object> map){
-        User user = (User) JSON.parseObject(JSON.toJSONString(map),User.class);
+    public Result<?> save(@RequestParam Map<String, Object> map) {
+        User user = (User) JSON.parseObject(JSON.toJSONString(map), User.class);
         return iUserService.addUser(user);
     }
 
     @PostMapping("/add")
-    public Result<?> add(@RequestBody User v){
+    public Result<?> add(@RequestBody User v) {
         return iUserService.addUser(v);
     }
 
     @PutMapping
-    public Result<?> update(@RequestParam Map<String,Object> map){
-        User user = (User) JSON.parseObject(JSON.toJSONString(map),User.class);
+    public Result<?> update(@RequestParam Map<String, Object> map) {
+        User user = (User) JSON.parseObject(JSON.toJSONString(map), User.class);
         return iUserService.updateUserById(user);
     }
 
     @DeleteMapping
-    public Result<?> delete(@RequestParam Integer uid){
+    public Result<?> delete(@RequestParam Integer uid) {
         return iUserService.deleteUser(uid);
     }
 
     @PostMapping("/login")
-    public Result<?> login(@RequestParam Integer uid,String password)
-    {
-        return iUserService.login(uid,password);
+    public Result<?> login(@RequestParam Integer uid, String password) {
+        return iUserService.login(uid, password);
     }
 }
-=======
-import com.example.demo.pojo.User;
-import com.example.demo.service.ActivityService;
-import com.example.demo.service.UserInfoService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequestMapping("/test")
-public class UserController {
-    @Autowired
-    UserInfoService uis;
-
-    @PostMapping("/query")
-    public User query(@RequestBody User user) {
-        return uis.getUserinfo(user.getUid());
-    }
-
-    @PostMapping("/add")
-    public int add(@RequestBody User user) {
-        return uis.register(user);
-    }
-
-    @PostMapping("/update")
-    public int update(@RequestBody User user) {
-        return uis.updateUserinfo(user);
-    }
-
-    @PostMapping("/login")
-    public int login(@RequestBody User user) {
-        return uis.log(user.getUid(), user.getPassword());
-    }
-
-
-}
-
->>>>>>> d4753b622a4473045e1ced57c58ac6db2c5d8e10

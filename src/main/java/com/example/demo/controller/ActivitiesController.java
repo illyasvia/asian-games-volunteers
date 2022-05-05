@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 /**
- * 活动服务相关 controller
+ * 志愿者服务相关 controller
  */
 @RestController
 @RequestMapping("/volunteering")
