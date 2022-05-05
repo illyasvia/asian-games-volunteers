@@ -19,4 +19,5 @@ public interface IActivityService {
     Result<?> addVol(Volunteering v);
     Result<?> updateVolById(Volunteering v);
     Result<?> deleteVol(Integer vid);
+    Result<?>searchByContent(String word);
 }
