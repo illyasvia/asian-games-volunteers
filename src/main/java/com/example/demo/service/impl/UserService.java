@@ -89,18 +89,25 @@ public class UserService implements IUserService {
 
     @Transactional
     @Override
-    public Result<?> login(Integer uid, String password) {
+    public Result<?> login(String phone, String password) {
         Result<?> result;
         try {
-            val array=iInforDao.getInforByUid(uid);
-            if(array.size()==0)throw new Exception("No such USER");
-            else if(array.size()!=1)throw new Exception("database have something wrong");
-            val temp=array.get(0);
-            if(!temp.getPassword().equals(password))throw new Exception("password error");
-            result = Result.success();
+            val array=iUserDao.getAll();
+            int flag=0;
+            for(val x:array)
+            {
+                if(x.getPhone().equals(phone))
+                {
+                    flag++;
+                    if(!x.getPassword().equals(password))throw new Exception("password error");
+                }
+            }
+            if(flag==0)throw new Exception("No such USER");
+            if(flag==2)throw new Exception("error in database");
+            result=Result.success();
         } catch (Exception e) {
             result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
         }
-        return  result;
+        return result;
     }
 }

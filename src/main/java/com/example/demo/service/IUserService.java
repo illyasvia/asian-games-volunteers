@@ -11,7 +11,7 @@ public interface IUserService {
     Result<?> addUser(User user);
     Result<?> updateUserById(User user);
     Result<?> deleteUser(Integer uid);
-    Result<?> login(Integer uid,String password);
+    Result<?> login(String phone,String password);
 
 }
 
