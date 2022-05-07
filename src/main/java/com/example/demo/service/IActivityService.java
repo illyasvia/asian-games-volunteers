@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.common.Result;
 import com.example.demo.pojo.Volunteering;
 
+import java.util.Date;
+
 /**
  * ClassName: IActivityService
  * Description:
@@ -19,5 +21,6 @@ public interface IActivityService {
     Result<?> addVol(Volunteering v);
     Result<?> updateVolById(Volunteering v);
     Result<?> deleteVol(Integer vid);
+    Result<?>Filter(int region, int type, int status, int min, int max, Date start, Date end);
     Result<?>searchByContent(String word);
 }

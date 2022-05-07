@@ -7,6 +7,7 @@ import com.example.demo.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -17,6 +18,10 @@ import java.util.Map;
 public class ActivitiesController {
     @Autowired
     private IActivityService iActivityService;
+
+    {
+
+    }
 
     @GetMapping
     public Result<?> get(@RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage
@@ -54,5 +59,12 @@ public class ActivitiesController {
     @GetMapping("/search")
     public Result<?> search(@RequestParam(value = "word") String word) {
         return iActivityService.searchByContent(word);
+    }
+
+    @GetMapping("/filter")
+    public Result<?> filter(@RequestParam(value = "region") int region, @RequestParam(value = "type") int type,
+                            @RequestParam(value = "status") int status, @RequestParam(value = "min") int min,
+                            @RequestParam(value = "max") int max, @RequestParam(value = "max") Date start,Date end) {
+        return iActivityService.Filter(region,type,status,min,max,start,end);
     }
 }
