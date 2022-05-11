@@ -56,4 +56,10 @@ public interface IInforDao {
      * 报名
      */
     void addInfor(Integer uid, Integer vid);
+
+    /**
+     * 志愿者注销时，应删除所有报名信息
+     * @param uid 志愿者id
+     */
+    void deleteInforByUid(Integer uid);
 }

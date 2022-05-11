@@ -37,7 +37,7 @@ public class InfoController {
      * 取消所有报名的人，并不能用于删除活动
      */
     @DeleteMapping()
-    public Result<?> deleteByVid(@PathVariable Integer vid){
+    public Result<?> deleteByVid(@RequestParam Integer vid){
         return iManagementService.deleteInforByVid(vid);
     }
 }

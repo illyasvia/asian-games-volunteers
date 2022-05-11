@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.common.ACTrie;
 import com.example.demo.common.Result;
 import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IVolunteeringDao;
@@ -7,9 +8,15 @@ import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IActivityService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 活动服务service
@@ -80,5 +87,41 @@ public class ActivityService implements IActivityService {
             result = Result.error(Result.UNKNOWN_ERROR,e.getMessage());
         }
         return result;
+    }
+
+    /**
+     * 使用AC自动机进行模式串匹配搜索
+     **/
+    @Override
+    public Result<?> searchByContent(String word) {
+        ACTrie ac = new ACTrie();//ac自动机
+        Map<Volunteering, Map<String, Float>> record = new HashMap<>();//记录多模式串匹配结果
+        List<Volunteering> result_list = new LinkedList<>(); //返回搜索结果
+        Map<String, Integer> count = new HashMap<>();
+
+        /*获取用户搜索字段关键字信息*/
+        val keyword = ACTrie.getSignalWord(word);
+        for (val x : keyword) {
+            ac.addKeyword(x);
+        }
+
+        //统计文章和标题关键字tf
+        val volunteers = iVolunteeringDao.getAll();
+        val SUM = volunteers.size();
+        for (val x : volunteers) {
+            record.put(x, ac.getTF(x, keyword, count));
+        }
+
+        //获取TF-IDF权重
+        for (val x : volunteers) {
+            float weight = 0f;
+            for (val y : keyword)
+            {
+                weight += record.get(x).get(y) * Math.log((float)SUM / (count.getOrDefault(keyword, 0) + 1))*(float)100/keyword.size();
+            }
+            if(weight>5)result_list.add(x);
+        }
+
+        return  Result.success(result_list);
     }
 }

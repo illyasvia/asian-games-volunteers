@@ -75,6 +75,9 @@
     <delete id="deleteInforByVid" parameterType="integer">
         delete from info where vid = #{vid}
     </delete>
+    <delete id="deleteInforByUid" parameterType="integer">
+        delete from info where Uid = #{uid}
+    </delete>
     <delete id="addInfor" parameterType="Integer">
         insert into info values(#{uid},#{vid})
     </delete>
