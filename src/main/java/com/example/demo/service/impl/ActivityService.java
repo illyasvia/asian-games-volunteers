@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 活动服务service
@@ -31,27 +28,28 @@ public class ActivityService implements IActivityService {
     private IInforDao iInforDao;
 
     @Override
-    public Result<?> getAll(){
+    public Result<?> getAll() {
         return Result.success(iVolunteeringDao.getAll());
     }
 
     /**
      * 按页查询
+     *
      * @param currentPage 当前页数
-     * @param rows 每页数量
+     * @param rows        每页数量
      * @return 返回数据是 活动的List
      */
     @Override
-    public Result<?> getByPage(Integer currentPage, Integer rows){
-        PageHelper.startPage(currentPage,rows);
+    public Result<?> getByPage(Integer currentPage, Integer rows) {
+        PageHelper.startPage(currentPage, rows);
         return Result.success(iVolunteeringDao.getAll());
     }
 
     @Override
-    public Result<?> getVolunteering(Integer currentPage, Integer rows){
+    public Result<?> getVolunteering(Integer currentPage, Integer rows) {
         Result<?> result;
-        if(rows <= 0) result = getAll();
-        else result = getByPage(currentPage,rows);
+        if (rows <= 0) result = getAll();
+        else result = getByPage(currentPage, rows);
         return result;
     }
 
@@ -78,13 +76,13 @@ public class ActivityService implements IActivityService {
     @Override
     public Result<?> deleteVol(Integer vid) {
         Result<?> result;
-        try{
+        try {
             // 需要先删除报名该活动的人的信息
             iInforDao.deleteInforByVid(vid);
             iVolunteeringDao.deleteVol(vid);
             result = Result.success();
-        } catch (Exception e){
-            result = Result.error(Result.UNKNOWN_ERROR,e.getMessage());
+        } catch (Exception e) {
+            result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
         }
         return result;
     }
@@ -115,13 +113,24 @@ public class ActivityService implements IActivityService {
         //获取TF-IDF权重
         for (val x : volunteers) {
             float weight = 0f;
-            for (val y : keyword)
-            {
-                weight += record.get(x).get(y) * Math.log((float)SUM / (count.getOrDefault(keyword, 0) + 1))*(float)100/keyword.size();
+            for (val y : keyword) {
+                weight += record.get(x).get(y) * Math.log((float) SUM / (count.getOrDefault(keyword, 0) + 1)) * (float) 100 / keyword.size();
             }
-            if(weight>5)result_list.add(x);
+            if (weight > 5) result_list.add(x);
         }
 
-        return  Result.success(result_list);
+        return Result.success(result_list);
+    }
+
+    @Override
+    public Result<?> Filter(int region, int type, int status, int min, int max, Date start,Date end) {
+        val array = iVolunteeringDao.getAll();
+        List<Volunteering> ans = new LinkedList<>();
+        for (val x : array) {
+            if (region == 0 || region == x.getLocation() && (type == 0 || type == x.getType())&&(start.before(x.getStart()))&&(end.after(x.getEnd()))
+                    && (status == 0 || status == x.getStatus()) && (x.getPNum() <= max && x.getPNum() >= min))
+                ans.add(x);
+        }
+        return Result.success(ans);
     }
 }
