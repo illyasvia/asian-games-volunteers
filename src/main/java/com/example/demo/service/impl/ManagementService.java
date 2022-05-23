@@ -65,7 +65,7 @@ public class ManagementService implements IManagementService {
     public Result<?> getInforByVid(Integer vid) {
         Result<?> result;
         try{
-            result = Result.success(iInforDao.getInforByUid(vid));
+            result = Result.success(iInforDao.getInforByVid(vid));
             return result;
         } catch (DataAccessException e){
             result = Result.error(Result.INFORMATION_ERROR,"传入参数未知");
@@ -116,20 +116,26 @@ public class ManagementService implements IManagementService {
         Result<?> result;
         try{
             Integer currentNum = iInforDao.getCountByVid(vid);
-            Volunteering v = iVolunteeringDao.getVolById(vid).get(0);
+            List<Volunteering> vList = iVolunteeringDao.getVolById(vid);
+            if(vList.size() == 0){
+                throw new Exception("没有该活动");
+            }
+            Volunteering v = vList.get(0);
             if(v.getPNum().equals(currentNum)){
                 result = Result.error(Result.FULL_REGISTRATION,"人数已满，无法报名");
             } else {
                 iInforDao.addInfor(uid,vid);
                 result = Result.success();
             }
+            platformTransactionManager.commit(transactionStatus);
             return result;
         } catch (DataAccessException e){
             result = Result.error(Result.INFORMATION_ERROR,"信息错误");
+            platformTransactionManager.rollback(transactionStatus);
         } catch (Exception e){
             result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
+            platformTransactionManager.rollback(transactionStatus);
         } finally {
-            platformTransactionManager.commit(transactionStatus);
             log.info("uid="+uid+"执行完毕了！！！！");
         }
         return result;
