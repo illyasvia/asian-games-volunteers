@@ -110,4 +110,20 @@ public class UserService implements IUserService {
         }
         return result;
     }
+
+    @Override
+    public Result<?> getImage(int uid) {
+        val user=iUserDao.getUserById(uid).get(0);
+        val url=user.getProfile();
+        return  Result.success("http://124.222.202.195:8080/img/"+url);
+    }
+
+    @Override
+    public Result<?> updateImage(int uid, String url) {
+        val user=iUserDao.getUserById(uid).get(0);
+        user.setProfile(url);
+        iUserDao.updateUserById(user);
+        return  Result.success();
+    }
+}
 }

@@ -54,6 +54,14 @@ public class UserController {
     @PostMapping("/login")
     public Result<?> login(@RequestParam String phone, String password) {
         return iUserService.login(phone, password);
+    public Result<?> login(@RequestParam String phone, String password) {
+        return iUserService.login(phone, password);
+    }
+
+    @PostMapping("/upload")
+    public Result<?>  uploadImage(@RequestParam(value = "file") MultipartFile multipartFile,@RequestParam(value = "uid") Integer uid) {
+        String imagePath = UploadImage.upload(multipartFile);
+        return iUserService.updateImage(uid,imagePath);
     }
 
     @PostMapping("/image")
@@ -61,6 +69,14 @@ public class UserController {
         // 调用写好的工具类
         String imagePath = UploadImage.upload(multipartFile);
         return Result.success("http://124.222.202.195:8080/img/"+imagePath);
+    }
+
+
+
+    @GetMapping("/image")
+    public  Result<?> getImage(@RequestParam(value = "uid") Integer uid)
+    {
+        return iUserService.getImage(uid);
     }
 
 

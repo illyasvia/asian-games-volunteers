@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.common.Result;
+import com.example.demo.common.UploadImage;
 import com.example.demo.pojo.User;
 
 public interface IUserService {
@@ -12,6 +13,7 @@ public interface IUserService {
     Result<?> updateUserById(User user);
     Result<?> deleteUser(Integer uid);
     Result<?> login(String phone,String password);
-
+    Result<?> updateImage(int uid,String url);
+    Result<?> getImage(int uid);
 }
 
