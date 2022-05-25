@@ -7,7 +7,8 @@ import com.example.demo.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**
@@ -18,11 +19,6 @@ import java.util.Map;
 public class ActivitiesController {
     @Autowired
     private IActivityService iActivityService;
-
-    {
-
-    }
-
     @GetMapping
     public Result<?> get(@RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage
             , @RequestParam(value = "rows", defaultValue = "0") Integer rows) {
@@ -64,7 +60,13 @@ public class ActivitiesController {
     @GetMapping("/filter")
     public Result<?> filter(@RequestParam(value = "region") int region, @RequestParam(value = "type") int type,
                             @RequestParam(value = "status") int status, @RequestParam(value = "min") int min,
-                            @RequestParam(value = "max") int max, @RequestParam(value = "max") Date start,Date end) {
-        return iActivityService.Filter(region,type,status,min,max,start,end);
+                            @RequestParam(value = "max") int max, @RequestParam(value = "start") String start,@RequestParam(value = "end")String end) {
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+        try {
+            return iActivityService.Filter(region,type,status,min,max,formatter.parse(start),formatter.parse(end));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Result.error(1005,"error argument");
+        }
     }
 }

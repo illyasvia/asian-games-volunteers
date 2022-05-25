@@ -127,7 +127,7 @@ public class ActivityService implements IActivityService {
         val array = iVolunteeringDao.getAll();
         List<Volunteering> ans = new LinkedList<>();
         for (val x : array) {
-            if (region == 0 || region == x.getLocation() && (type == 0 || type == x.getType())&&(start.before(x.getStart()))&&(end.after(x.getEnd()))
+            if (region == 0 || region == x.getLocation() && (type == 0 || type == x.getType())&&(start.after(x.getStart()))&&(end.before(x.getEnd()))
                     && (status == 0 || status == x.getStatus()) && (x.getPNum() <= max && x.getPNum() >= min))
                 ans.add(x);
         }
