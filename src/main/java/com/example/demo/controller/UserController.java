@@ -52,12 +52,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result<?> login(@RequestParam String phone, String password) {
-        return iUserService.login(phone, password);
-    public Result<?> login(@RequestParam String phone, String password) {
+    public Result<?> login(@RequestParam(value = "phone") String phone,@RequestParam(value = "password") String password) {
         return iUserService.login(phone, password);
     }
-
     @PostMapping("/upload")
     public Result<?>  uploadImage(@RequestParam(value = "file") MultipartFile multipartFile,@RequestParam(value = "uid") Integer uid) {
         String imagePath = UploadImage.upload(multipartFile);
