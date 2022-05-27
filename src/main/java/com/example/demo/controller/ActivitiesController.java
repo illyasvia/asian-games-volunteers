@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.demo.common.Result;
 import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IActivityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 /**
  * 志愿者服务相关 controller
  */
+@Slf4j
 @RestController
 @RequestMapping("/volunteering")
 public class ActivitiesController {
@@ -33,11 +35,6 @@ public class ActivitiesController {
     @PostMapping
     public Result<?> save(@RequestParam Map<String, Object> map) {
         Volunteering v = (Volunteering) JSON.parseObject(JSON.toJSONString(map), Volunteering.class);
-        return iActivityService.addVol(v);
-    }
-
-    @PostMapping("/add")
-    public Result<?> add(@RequestBody Volunteering v) {
         return iActivityService.addVol(v);
     }
 

@@ -35,11 +35,6 @@ public class UserController {
         return iUserService.addUser(user);
     }
 
-    @PostMapping("/add")
-    public Result<?> add(@RequestBody User v) {
-        return iUserService.addUser(v);
-    }
-
     @PutMapping
     public Result<?> update(@RequestParam Map<String, Object> map) {
         User user = (User) JSON.parseObject(JSON.toJSONString(map), User.class);

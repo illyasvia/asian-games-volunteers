@@ -2,9 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.common.Result;
 import com.example.demo.service.IManagementService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@Slf4j
 @RestController
 @RequestMapping("/info")
 public class InfoController {
@@ -30,6 +31,8 @@ public class InfoController {
     // 接收报名请求
     @PostMapping()
     public Result<?> registration(@RequestParam Integer uid, @RequestParam Integer vid){
+        log.info(uid.toString());
+        log.info(vid.toString());
         return iManagementService.registration(uid,vid);
     }
 
