@@ -4,6 +4,7 @@ import com.example.demo.pojo.Condition;
 import com.example.demo.pojo.User;
 import com.example.demo.pojo.Volunteering;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -43,13 +44,13 @@ public interface IInforDao {
     /**
      * 获取指定的报名信息
      */
-    Integer getRegistration(Integer uid,Integer vid);
+    Integer getRegistration(@Param("uid") Integer uid, @Param("vid") Integer vid);
 
     /**
      * 根据 用户名删除 志愿者活动
      * 就是取消一个用户的某项报名
      */
-    void deleteSpecifiedInfor(Integer uid, Integer vid);
+    void deleteSpecifiedInfor(@Param("uid") Integer uid, @Param("vid") Integer vid);
 
     /**
      * 删除某项志愿者活动，删除该活动时，应删除所有报名信息
@@ -60,7 +61,7 @@ public interface IInforDao {
     /**
      * 报名
      */
-    void addInfor(Integer uid, Integer vid);
+    void addInfor(@Param("uid") Integer uid, @Param("vid") Integer vid);
 
     /**
      * 志愿者注销时，应删除所有报名信息
