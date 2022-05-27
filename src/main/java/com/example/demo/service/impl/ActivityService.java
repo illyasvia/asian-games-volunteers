@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.common.ACTrie;
+import com.example.demo.common.InformationException;
 import com.example.demo.common.Result;
 import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IVolunteeringDao;
@@ -9,10 +10,13 @@ import com.example.demo.service.IActivityService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -61,15 +65,40 @@ public class ActivityService implements IActivityService {
     @Transactional
     @Override
     public Result<?> addVol(Volunteering v) {
-        iVolunteeringDao.addVol(v);
-        return Result.success();
+        Result<?> result;
+        try{
+            if(v.getTitle() == null || "".equals(v.getTitle())){
+                throw new InformationException("活动标题不能为空");
+            }
+            iVolunteeringDao.addVol(v);
+            result = Result.success();
+        } catch (InformationException e){
+            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
+        }
+        return result;
     }
 
     @Transactional
     @Override
     public Result<?> updateVolById(Volunteering v) {
-        iVolunteeringDao.updateVolById(v);
-        return Result.success();
+        Result<?> result;
+        try{
+            if(v.getVid() == null){
+                throw new InformationException("未指明活动vid");
+            }
+
+            Integer num = iInforDao.getCountByVid(v.getVid());
+            if(v.getPNum() != null && v.getPNum() < num){
+                throw new InformationException("修改后可报名人数小于已报名人数！");
+            }
+            iVolunteeringDao.updateVolById(v);
+            result = Result.success();
+        } catch (InformationException e){
+            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
+        } catch (Exception e){
+            result = Result.error(Result.UNKNOWN_ERROR,"未知错误");
+        }
+        return result;
     }
 
     @Transactional
@@ -77,10 +106,15 @@ public class ActivityService implements IActivityService {
     public Result<?> deleteVol(Integer vid) {
         Result<?> result;
         try {
+            if(iVolunteeringDao.getVolById(vid).size() == 0){
+                throw new InformationException("没有该活动");
+            }
             // 需要先删除报名该活动的人的信息
             iInforDao.deleteInforByVid(vid);
             iVolunteeringDao.deleteVol(vid);
             result = Result.success();
+        } catch (InformationException e){
+            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
         } catch (Exception e) {
             result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
         }
