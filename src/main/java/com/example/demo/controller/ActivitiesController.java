@@ -21,6 +21,7 @@ import java.util.Map;
 public class ActivitiesController {
     @Autowired
     private IActivityService iActivityService;
+
     @GetMapping
     public Result<?> get(@RequestParam(value = "currentPage", defaultValue = "0") Integer currentPage
             , @RequestParam(value = "rows", defaultValue = "0") Integer rows) {
@@ -57,13 +58,14 @@ public class ActivitiesController {
     @GetMapping("/filter")
     public Result<?> filter(@RequestParam(value = "region") int region, @RequestParam(value = "type") int type,
                             @RequestParam(value = "status") int status, @RequestParam(value = "min") int min,
-                            @RequestParam(value = "max") int max, @RequestParam(value = "start") String start,@RequestParam(value = "end")String end) {
-        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
+                            @RequestParam(value = "max") int max, @RequestParam(value = "start") String start, @RequestParam(value = "end")
+                                    String end, @RequestParam(value = "currentPage") int currentPage, @RequestParam(value = "rows") int rows) {
+        java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            return iActivityService.Filter(region,type,status,min,max,formatter.parse(start),formatter.parse(end));
+            return iActivityService.Filter(region, type, status, min, max, formatter.parse(start), formatter.parse(end), currentPage, rows);
         } catch (ParseException e) {
             e.printStackTrace();
-            return Result.error(1005,"error argument");
+            return Result.error(1005, "error argument");
         }
     }
 }

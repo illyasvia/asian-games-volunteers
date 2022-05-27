@@ -10,13 +10,10 @@ import com.example.demo.service.IActivityService;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLDataException;
-import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -66,14 +63,14 @@ public class ActivityService implements IActivityService {
     @Override
     public Result<?> addVol(Volunteering v) {
         Result<?> result;
-        try{
-            if(v.getTitle() == null || "".equals(v.getTitle())){
+        try {
+            if (v.getTitle() == null || "".equals(v.getTitle())) {
                 throw new InformationException("活动标题不能为空");
             }
             iVolunteeringDao.addVol(v);
             result = Result.success();
-        } catch (InformationException e){
-            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
+        } catch (InformationException e) {
+            result = Result.error(Result.INFORMATION_ERROR, e.getMessage());
         }
         return result;
     }
@@ -82,21 +79,21 @@ public class ActivityService implements IActivityService {
     @Override
     public Result<?> updateVolById(Volunteering v) {
         Result<?> result;
-        try{
-            if(v.getVid() == null){
+        try {
+            if (v.getVid() == null) {
                 throw new InformationException("未指明活动vid");
             }
 
             Integer num = iInforDao.getCountByVid(v.getVid());
-            if(v.getPNum() != null && v.getPNum() < num){
+            if (v.getPNum() != null && v.getPNum() < num) {
                 throw new InformationException("修改后可报名人数小于已报名人数！");
             }
             iVolunteeringDao.updateVolById(v);
             result = Result.success();
-        } catch (InformationException e){
-            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
-        } catch (Exception e){
-            result = Result.error(Result.UNKNOWN_ERROR,"未知错误");
+        } catch (InformationException e) {
+            result = Result.error(Result.INFORMATION_ERROR, e.getMessage());
+        } catch (Exception e) {
+            result = Result.error(Result.UNKNOWN_ERROR, "未知错误");
         }
         return result;
     }
@@ -106,15 +103,15 @@ public class ActivityService implements IActivityService {
     public Result<?> deleteVol(Integer vid) {
         Result<?> result;
         try {
-            if(iVolunteeringDao.getVolById(vid).size() == 0){
+            if (iVolunteeringDao.getVolById(vid).size() == 0) {
                 throw new InformationException("没有该活动");
             }
             // 需要先删除报名该活动的人的信息
             iInforDao.deleteInforByVid(vid);
             iVolunteeringDao.deleteVol(vid);
             result = Result.success();
-        } catch (InformationException e){
-            result = Result.error(Result.INFORMATION_ERROR,e.getMessage());
+        } catch (InformationException e) {
+            result = Result.error(Result.INFORMATION_ERROR, e.getMessage());
         } catch (Exception e) {
             result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
         }
@@ -157,14 +154,30 @@ public class ActivityService implements IActivityService {
     }
 
     @Override
-    public Result<?> Filter(int region, int type, int status, int min, int max, Date start,Date end) {
+    public Result<?> Filter(int region, int type, int status, int min, int max, Date start, Date end, int currentPage, int rows) {
         val array = iVolunteeringDao.getAll();
         List<Volunteering> ans = new LinkedList<>();
         for (val x : array) {
-            if (region == 0 || region == x.getLocation() && (type == 0 || type == x.getType())&&(start.after(x.getStart()))&&(end.before(x.getEnd()))
-                    && (status == 0 || status == x.getStatus()) && (x.getPNum() <= max && x.getPNum() >= min))
+            if (region == 0 || region == x.getLocation()
+                    && (type == 0 || type == x.getType())
+                    && (start.after(x.getStart()))
+                    && (end.before(x.getEnd()))
+                    && (status == 0 || status == x.getStatus())
+                    && (x.getPNum() <= max && x.getPNum() >= min))
                 ans.add(x);
         }
-        return Result.success(ans);
+        List<Volunteering> list = new ArrayList<>();
+        for (int i = (currentPage - 1) * rows; i < Integer.min(ans.size(), currentPage * rows); i++) {
+            list.add(ans.get(i));
+        }
+        return Result.success(list);
+    }
+
+    @Override
+    public Result<?> updateImage(int vid, String url) {
+        val vol=iVolunteeringDao.getVolById(vid).get(0);
+        vol.setCover(url);
+        iVolunteeringDao.updateVolById(vol);
+        return  Result.success();
     }
 }
