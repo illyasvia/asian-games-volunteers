@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.common.InformationException;
 import com.example.demo.common.Result;
 import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IUserDao;
@@ -90,21 +91,27 @@ public class UserService implements IUserService {
     @Transactional
     @Override
     public Result<?> login(String phone, String password) {
+        log.info(phone);
+        log.info(password);
+        Integer uid = -1;
         Result<?> result;
         try {
-            val array=iUserDao.getAll();
+            val array= iUserDao.getAll();
             int flag=0;
             for(val x:array)
             {
                 if(x.getPhone().equals(phone))
                 {
-                    flag++;
-                    if(!x.getPassword().equals(password))throw new Exception("password error");
+                    flag = 1;
+                    if(!x.getPassword().equals(password))
+                        throw new InformationException(Result.WRONG_PASSWORD,"password error");
+                    uid = x.getUid();
                 }
             }
-            if(flag==0)throw new Exception("No such USER");
-            if(flag==2)throw new Exception("error in database");
-            result=Result.success();
+            if( flag == 0 )throw new InformationException(Result.WRONG_USERNAME,"No such USER");
+            result=Result.success(uid);
+        } catch (InformationException e){
+            result = Result.error(e.code,e.getMessage());
         } catch (Exception e) {
             result = Result.error(Result.UNKNOWN_ERROR, e.getMessage());
         }

@@ -1,5 +1,7 @@
 package com.example.demo.common;
 
+import javax.sound.sampled.Line;
+
 /**
  * ClassName: InformationException
  * Description:
@@ -9,10 +11,14 @@ package com.example.demo.common;
  * @since JDK 1.8
  */
 public class InformationException extends Exception {
-    public static final int code = Result.INFORMATION_ERROR;
+    public int code;
 
     public InformationException(String message) {
         super(message);
+    }
+    public InformationException(Integer code, String message){
+        super(message);
+        this.code = code;
     }
 
     @Override
