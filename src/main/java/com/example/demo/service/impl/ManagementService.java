@@ -119,7 +119,7 @@ public class ManagementService implements IManagementService {
             if(vList.size() == 0){
                 throw new InformationException("没有该活动");
             }
-            if(iInforDao.getSpecifiedInfor(uid,vid) == 1){
+            if(iInforDao.getRegistration(uid,vid) == 1){
                 throw new InformationException("已报名，请勿重新报名");
             }
             Volunteering v = vList.get(0);

@@ -43,7 +43,8 @@ public interface IInforDao {
     /**
      * 获取指定的报名信息
      */
-    Integer getSpecifiedInfor(Integer uid,Integer vid);
+    Integer getRegistration(Integer uid,Integer vid);
+
     /**
      * 根据 用户名删除 志愿者活动
      * 就是取消一个用户的某项报名

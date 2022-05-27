@@ -30,7 +30,8 @@ public class InfoController {
 
     // 接收报名请求
     @PostMapping()
-    public Result<?> registration(@RequestParam(name = "uid") Integer uid, @RequestParam(name = "vid") Integer vid){
+    public Result<?> registration(@RequestParam(name = "uid") Integer uid,
+                                  @RequestParam(name = "vid") Integer vid){
         log.info(uid.toString());
         log.info(vid.toString());
         return iManagementService.registration(uid,vid);
