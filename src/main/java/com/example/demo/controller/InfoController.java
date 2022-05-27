@@ -30,7 +30,7 @@ public class InfoController {
 
     // 接收报名请求
     @PostMapping()
-    public Result<?> registration(@RequestParam Integer uid, @RequestParam Integer vid){
+    public Result<?> registration(@RequestParam(name = "uid") Integer uid, @RequestParam(name = "vid") Integer vid){
         log.info(uid.toString());
         log.info(vid.toString());
         return iManagementService.registration(uid,vid);
@@ -40,7 +40,7 @@ public class InfoController {
      * 取消所有报名的人，并不能用于删除活动
      */
     @DeleteMapping()
-    public Result<?> deleteByVid(@RequestParam Integer vid){
+    public Result<?> deleteByVid(@RequestParam(name = "vid") Integer vid){
         return iManagementService.deleteInforByVid(vid);
     }
 }

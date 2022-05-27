@@ -46,7 +46,7 @@ public class ActivitiesController {
     }
 
     @DeleteMapping
-    public Result<?> delete(@RequestParam Integer vid) {
+    public Result<?> delete(@RequestParam(name = "vid") Integer vid) {
         return iActivityService.deleteVol(vid);
     }
 

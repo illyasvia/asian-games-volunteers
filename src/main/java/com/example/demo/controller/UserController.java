@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public Result<?> delete(@RequestParam Integer uid) {
+    public Result<?> delete(@RequestParam(name = "uid") Integer uid) {
         return iUserService.deleteUser(uid);
     }
 

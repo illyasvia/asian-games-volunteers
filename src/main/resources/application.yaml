@@ -4,9 +4,9 @@ mybatis:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test1?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/volunteer?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: 123456
+    password: root
   jackson:
     date-format: yyyy年MM月dd日
   servlet:
@@ -14,11 +14,6 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 100MB
-  mvc:
-    static-path-pattern: /img/**
-  web:
-    resources:
-      static-locations: file:C:/resource/img
 pagehelper:
   helperDialect: mysql
   reasonable: true
