@@ -2,10 +2,12 @@ package com.example.demo.common;
 
 import com.example.demo.pojo.Volunteering;
 import com.huaban.analysis.jieba.JiebaSegmenter;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import java.util.*;
 
+@Slf4j
 /*算法不想写注释了,我相信你的实力ヾ(≧▽≦*)o*/
 public class ACTrie {
 
@@ -37,8 +39,10 @@ public class ACTrie {
         }
     }
 
-    public Map<String, Float> getTF(Volunteering x, List<String> keywords,Map<String,Integer>count_all) {
-        int SUM = getSignalWord(x.getTitle()).size() + getSignalWord(x.getContent()).size();
+    public Map<String, Float> getTF(Volunteering x, List<String> keywords, Map<String, Integer> count_all) {
+        String content = x.getContent() == null ? "" : x.getContent();
+        String title = x.getTitle() == null ? "" : x.getTitle();
+        int SUM = getSignalWord(title).size() + getSignalWord(content).size();
         Map<String, Integer> count = new HashMap<>();
         Map<String, Float> tf = new HashMap<>();
 
@@ -52,14 +56,12 @@ public class ACTrie {
             count.put(str.getKeyword(), count.getOrDefault(str.getKeyword(), 0) + 1);
         }
 
-        for(val str:keywords)
-        {
-            if(count.getOrDefault(str,0)!=0)count_all.put(str,count.getOrDefault(str,0)+1);
-            tf.put(str,  ((float)count.getOrDefault(str,0)/SUM));
+        for (val str : keywords) {
+            if (count.getOrDefault(str, 0) != 0) count_all.put(str, count.getOrDefault(str, 0) + 1);
+            tf.put(str, ((float) count.getOrDefault(str, 0) / SUM));
         }
         return tf;
     }
-
 
 
     /**
@@ -82,6 +84,7 @@ public class ACTrie {
      */
     public Collection<Patten_String> parseText(String text) {
         checkForConstructedFailureStates();
+        text = (text == null) ? "" : text;
 
         Node currentState = this.root;
         List<Patten_String> collectedPattenStrings = new ArrayList<>();

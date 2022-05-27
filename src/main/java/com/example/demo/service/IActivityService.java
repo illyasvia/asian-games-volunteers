@@ -21,6 +21,7 @@ public interface IActivityService {
     Result<?> addVol(Volunteering v);
     Result<?> updateVolById(Volunteering v);
     Result<?> deleteVol(Integer vid);
-    Result<?>Filter(int region, int type, int status, int min, int max, Date start, Date end);
+    Result<?>Filter(int region, int type, int status, int min, int max, Date start, Date end,int currentPage,int rows);
     Result<?>searchByContent(String word);
+    Result<?> updateImage(int uid,String url);
 }
