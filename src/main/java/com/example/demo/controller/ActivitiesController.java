@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.example.demo.common.Result;
+import com.example.demo.common.UploadImage;
 import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IActivityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,5 +69,11 @@ public class ActivitiesController {
             e.printStackTrace();
             return Result.error(1005, "error argument");
         }
+    }
+
+    @PostMapping("/upload")
+    public Result<?>  uploadImage(@RequestParam(value = "file") MultipartFile multipartFile,@RequestParam(value = "vid") Integer vid) {
+        String imagePath = UploadImage.upload(multipartFile);
+        return iActivityService.updateImage(vid,imagePath);
     }
 }
