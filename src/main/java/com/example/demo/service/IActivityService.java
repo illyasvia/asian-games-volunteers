@@ -1,9 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.common.Result;
+import com.example.demo.pojo.VolCondition;
 import com.example.demo.pojo.Volunteering;
-
-import java.util.Date;
 
 /**
  * ClassName: IActivityService
@@ -21,7 +20,7 @@ public interface IActivityService {
     Result<?> addVol(Volunteering v);
     Result<?> updateVolById(Volunteering v);
     Result<?> deleteVol(Integer vid);
-    Result<?>Filter(int region, int type, int status, int min, int max, Date start, Date end,int currentPage,int rows);
+    Result<?>Filter(VolCondition condition);
     Result<?>searchByContent(String word);
     Result<?> updateImage(int uid,String url);
 }

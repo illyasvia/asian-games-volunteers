@@ -50,6 +50,7 @@ public class ParaFormatInterceptor implements HandlerInterceptor {
         }
         if("application/json".equals(request.getContentType())){
             response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=utf-8");
             PrintWriter writer = response.getWriter();
             writer.write("别发json,谢谢配合");
             return false;

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.demo.common.Result;
 import com.example.demo.common.UploadImage;
+import com.example.demo.pojo.VolCondition;
 import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IActivityService;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 
 /**
@@ -58,17 +57,9 @@ public class ActivitiesController {
     }
 
     @GetMapping("/filter")
-    public Result<?> filter(@RequestParam(value = "region") int region, @RequestParam(value = "type") int type,
-                            @RequestParam(value = "status") int status, @RequestParam(value = "min") int min,
-                            @RequestParam(value = "max") int max, @RequestParam(value = "start") String start, @RequestParam(value = "end")
-                                    String end, @RequestParam(value = "currentPage") int currentPage, @RequestParam(value = "rows") int rows) {
-        java.text.SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return iActivityService.Filter(region, type, status, min, max, formatter.parse(start), formatter.parse(end), currentPage, rows);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return Result.error(1005, "error argument");
-        }
+    public Result<?> filter(@RequestParam Map<String,Object> map) {
+        VolCondition condition = JSON.parseObject(JSON.toJSONString(map), VolCondition.class);
+        return iActivityService.Filter(condition);
     }
 
     @PostMapping("/upload")

@@ -9,6 +9,30 @@
     <select id="getVolById" resultType="volunteering" parameterType="integer">
         select * from volunteering where vid = #{vid}
     </select>
+    <select id="getByCondition" parameterType="VolCondition" resultType="volunteering">
+        select * from volunteering where 1 = 1
+         <if test="region != null and region != 0">
+              and location = #{region}
+         </if>
+         <if test="type != null and type != 0">
+              and type = #{type}
+         </if>
+        <if test="status != null and status != 0">
+             and status = #{status}
+        </if>
+        <if test="min != null">
+            and pNum >= #{min}
+        </if>
+        <if test="max != null">
+            and #{max} >= pNum
+        </if>
+        <if test="start != null">
+            and start >= #{start}
+        </if>
+        <if test="end != null">
+            and #{end} >= end
+        </if>
+    </select>
     <delete id="deleteVol" parameterType="integer">
         delete from volunteering where vid = #{vid}
     </delete>

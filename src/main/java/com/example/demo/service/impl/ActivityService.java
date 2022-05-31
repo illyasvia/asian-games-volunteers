@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.common.ACTrie;
 import com.example.demo.common.InformationException;
 import com.example.demo.common.Result;
+import com.example.demo.pojo.VolCondition;
 import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.Volunteering;
@@ -154,23 +155,18 @@ public class ActivityService implements IActivityService {
     }
 
     @Override
-    public Result<?> Filter(int region, int type, int status, int min, int max, Date start, Date end, int currentPage, int rows) {
-        val array = iVolunteeringDao.getAll();
-        List<Volunteering> ans = new LinkedList<>();
-        for (val x : array) {
-            if (region == 0 || region == x.getLocation()
-                    && (type == 0 || type == x.getType())
-                    && (start.after(x.getStart()))
-                    && (end.before(x.getEnd()))
-                    && (status == 0 || status == x.getStatus())
-                    && (x.getPNum() <= max && x.getPNum() >= min))
-                ans.add(x);
+    public Result<?> Filter(VolCondition condition) {
+        Result<?> result;
+        try{
+            if(condition.getCurrentPage() != null && condition.getRows() != null
+                   && condition.getRows() != 0){
+                PageHelper.startPage(condition.getCurrentPage(),condition.getRows());
+            }
+            result = Result.success(iVolunteeringDao.getByCondition(condition));
+        } catch (Exception e){
+            result = Result.error(Result.UNKNOWN_ERROR,"后台错误");
         }
-        List<Volunteering> list = new ArrayList<>();
-        for (int i = (currentPage - 1) * rows; i < Integer.min(ans.size(), currentPage * rows); i++) {
-            list.add(ans.get(i));
-        }
-        return Result.success(list);
+        return result;
     }
 
     @Override

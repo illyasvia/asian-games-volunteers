@@ -68,6 +68,7 @@
     <select id="getInforByVid" parameterType="integer" resultMap="volUserMap">
         select user.*,volunteering.*
          from user,volunteering,info where user.uid = info.uid and volunteering.vid = info.vid and volunteering.vid = #{vid}
+
     </select>
     <select id="getRegistration" parameterType="integer" resultType="integer">
         select count(*) from info where uid = #{uid} and vid = #{vid}

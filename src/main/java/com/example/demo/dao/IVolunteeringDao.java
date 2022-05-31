@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.pojo.VolCondition;
 import com.example.demo.pojo.Volunteering;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +14,8 @@ public interface IVolunteeringDao {
     List<Volunteering> getAll();
 
     List<Volunteering> getVolById(Integer vid);
+
+    List<Volunteering> getByCondition(VolCondition condition);
 
     /**
      * 添加志愿者活动
