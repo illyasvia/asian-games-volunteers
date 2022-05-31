@@ -6,6 +6,7 @@ import com.example.demo.dao.IInforDao;
 import com.example.demo.dao.IUserDao;
 import com.example.demo.dao.IVolunteeringDao;
 import com.example.demo.pojo.User;
+import com.example.demo.pojo.VolCondition;
 import com.example.demo.pojo.Volunteering;
 import com.example.demo.service.IManagementService;
 import com.example.demo.service.IUserService;
@@ -13,6 +14,7 @@ import com.github.pagehelper.PageHelper;
 import lombok.Synchronized;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -56,12 +58,20 @@ public class ManagementService implements IManagementService {
 
     @Override
     public Result<?> getInforByUid(Integer uid) {
-        return Result.success(iInforDao.getInforByUid(uid));
+        List<User> data = iInforDao.getInforByUid(uid);
+        if(data.size() == 0){
+            data = iUserDao.getUserById(uid);
+        }
+        return Result.success(data);
     }
 
     @Override
     public Result<?> getInforByVid(Integer vid) {
-        return Result.success(iInforDao.getInforByVid(vid));
+        List<Volunteering> data = iInforDao.getInforByVid(vid);
+        if(data.size() == 0){
+            data = iVolunteeringDao.getVolById(vid);
+        }
+        return Result.success(data);
     }
 
     @Transactional
