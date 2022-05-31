@@ -158,15 +158,18 @@ public class ActivityService implements IActivityService {
         val array = iVolunteeringDao.getAll();
         List<Volunteering> ans = new LinkedList<>();
         for (val x : array) {
-            if (region == 0 || region == x.getLocation()
+            if ((region == 0 || region == x.getLocation())
                     && (type == 0 || type == x.getType())
-                    && (start.after(x.getStart()))
-                    && (end.before(x.getEnd()))
+                    && (start.before(x.getStart()) || start.equals(x.getStart()))
+                    && (end.after(x.getEnd()) || end.equals(x.getEnd()))
                     && (status == 0 || status == x.getStatus())
                     && (x.getPNum() <= max && x.getPNum() >= min))
                 ans.add(x);
         }
         List<Volunteering> list = new ArrayList<>();
+        if (currentPage == 0 || rows == 0) {
+            return Result.success(ans);
+        }
         for (int i = (currentPage - 1) * rows; i < Integer.min(ans.size(), currentPage * rows); i++) {
             list.add(ans.get(i));
         }
@@ -175,9 +178,9 @@ public class ActivityService implements IActivityService {
 
     @Override
     public Result<?> updateImage(int vid, String url) {
-        val vol=iVolunteeringDao.getVolById(vid).get(0);
+        val vol = iVolunteeringDao.getVolById(vid).get(0);
         vol.setCover(url);
         iVolunteeringDao.updateVolById(vol);
-        return  Result.success();
+        return Result.success();
     }
 }
